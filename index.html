@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정산 조건 재검토 요청 · 주식회사 어바웃피싱</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --text: #0A0F1E;
+  --text-2: #475569;
+  --text-3: #94A3B8;
+  --bg: #FFFFFF;
+  --bg-2: #F8FAFC;
+  --bg-3: #F1F5F9;
+  --border: #E2E8F0;
+  --brand: #1D4ED8;
+  --brand-bg: #EFF6FF;
+  --green: #047857;
+  --green-bg: #ECFDF5;
+  --amber: #B45309;
+  --amber-bg: #FFFBEB;
+  --red: #B91C1C;
+  --red-bg: #FEF2F2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: #E8EBF0;
+  line-height: 1.6;
+  letter-spacing: -0.012em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 920px; margin: 40px auto; padding: 0 16px; }
+
+.doc {
+  background: var(--bg);
+  border-radius: 14px;
+  box-shadow: 0 20px 40px -20px rgba(15,23,42,.15), 0 4px 8px rgba(15,23,42,.04);
+  overflow: hidden;
+}
+
+/* ============ COVER ============ */
+.cover {
+  padding: 72px 80px 56px;
+  background: linear-gradient(180deg, #FAFBFC 0%, #FFFFFF 100%);
+  border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--brand); }
+.cover h1 {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.cover h1 .em {
+  background: linear-gradient(180deg, transparent 65%, rgba(29,78,216,0.18) 65%);
+  padding: 0 2px;
+}
+.cover .lead-line {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-2);
+  max-width: 700px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.cover .lead-line strong { color: var(--text); font-weight: 700; }
+.cover .meta {
+  margin-top: 44px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.meta-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* ============ BODY ============ */
+.body-inner { padding: 72px 80px 80px; }
+
+.section { margin-top: 80px; }
+.section:first-child { margin-top: 0; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 28px;
+  border-bottom: 2px solid var(--text);
+}
+.section-num-lg {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.section-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  flex: 1;
+}
+.section-intro {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 24px;
+  letter-spacing: -0.013em;
+}
+.section-intro strong { font-weight: 700; }
+
+p { font-size: 15px; line-height: 1.75; color: var(--text); letter-spacing: -0.013em; }
+em { font-style: normal; font-weight: 700; color: var(--brand); }
+
+.caption {
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ============ TABLES ============ */
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg);
+  margin: 16px 0;
+}
+.table-wrap-scroll { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+th {
+  background: #F8FAFC;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 13px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  letter-spacing: -0.005em;
+}
+td {
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 500;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--bg-2); }
+td.label {
+  font-weight: 700;
+  background: var(--bg-2);
+  text-align: left;
+  padding-left: 18px;
+}
+th.left { text-align: left; padding-left: 18px; }
+
+tr.row-ref td { background: var(--red-bg); }
+tr.row-ref:hover td { background: #FEE2E2; }
+tr.row-break td { background: var(--brand-bg); font-weight: 700; }
+tr.row-break:hover td { background: #DBEAFE; }
+tr.row-toss td { background: var(--amber-bg); }
+tr.row-toss:hover td { background: #FEF3C7; }
+
+.tag-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+  letter-spacing: 0.02em;
+}
+.tag-toss { background: var(--amber); color: white; }
+.tag-break { background: var(--brand); color: white; }
+.tag-ref { background: var(--red); color: white; }
+
+.text-good { color: var(--green); font-weight: 700; }
+.text-mid { color: var(--amber); font-weight: 700; }
+.text-bad { color: var(--red); font-weight: 700; }
+.text-brand { color: var(--brand); font-weight: 700; }
+
+/* ============ PULLQUOTE (single, killer line) ============ */
+.pullquote {
+  margin: 28px 0;
+  padding: 24px 28px 24px 32px;
+  background: #FFFBEB;
+  border-left: 4px solid var(--amber);
+  border-radius: 0 10px 10px 0;
+}
+.pullquote-text {
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.pullquote-text strong { color: var(--amber); font-weight: 800; }
+
+/* ============ CHART CARD ============ */
+.chart-card {
+  margin: 16px 0;
+  padding: 28px 28px 24px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.chart-subtitle { font-size: 12px; color: var(--text-2); }
+.chart-body { position: relative; height: 320px; }
+.chart-legend { display: flex; gap: 14px; flex-wrap: wrap; }
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid;
+}
+
+/* ============ SIMULATOR ============ */
+.simulator {
+  margin-top: 24px;
+  padding: 26px 28px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #EEF2FF 100%);
+  border: 1px solid #DBEAFE;
+  border-radius: 12px;
+}
+.simulator-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.simulator-label::before {
+  content: "";
+  width: 6px; height: 6px;
+  background: var(--brand);
+  border-radius: 50%;
+}
+.simulator-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.simulator-intro {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.simulator-intro strong { color: var(--text); }
+.slider-panel {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 20px 24px 16px;
+  margin-bottom: 16px;
+}
+.slider-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.slider-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.slider-readout .n-prefix {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.slider-readout .n-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  min-width: 48px;
+  text-align: center;
+}
+.slider-readout .n-unit {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.slider-status { text-align: right; }
+.slider-status-label {
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.slider-status-value { font-size: 15px; font-weight: 700; }
+.slider-input {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: linear-gradient(to right,
+    rgba(4,120,87,0.25) 0%,
+    rgba(4,120,87,0.25) 37%,
+    rgba(180,83,9,0.25) 37%,
+    rgba(180,83,9,0.25) 63%,
+    rgba(185,28,28,0.25) 63%,
+    rgba(185,28,28,0.25) 100%);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid var(--brand);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(29,78,216,0.3);
+  transition: transform 0.1s;
+}
+.slider-input::-webkit-slider-thumb:hover { transform: scale(1.12); }
+.slider-input::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid var(--brand);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(29,78,216,0.3);
+}
+.slider-zones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.slider-zones .zone-good { color: var(--green); flex: 0 0 37%; }
+.slider-zones .zone-mid { color: var(--amber); flex: 0 0 26%; text-align: center; }
+.slider-zones .zone-bad { color: var(--red); flex: 0 0 37%; text-align: right; }
+.slider-zones strong {
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+.simulator-table td.sim-value {
+  font-weight: 700;
+  color: var(--brand);
+  background: #EFF6FF;
+}
+.simulator-table td.sim-dplus {
+  font-weight: 600;
+  color: var(--brand);
+  background: #EFF6FF;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ ASK BOX (section 3) ============ */
+.ask-box {
+  margin-top: 28px;
+  padding: 32px 36px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F0F9FF 100%);
+  border: 2px solid #BFDBFE;
+  border-radius: 14px;
+}
+.ask-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.ask-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+.ask-title .hl {
+  color: var(--brand);
+}
+
+/* ============ GLOSSARY ============ */
+.glossary {
+  margin-top: 32px;
+  padding: 18px 22px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.glossary-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.glossary-label::before {
+  content: "§";
+  font-size: 13px;
+}
+.glossary dl {
+  display: grid;
+  grid-template-columns: minmax(130px, 190px) 1fr;
+  gap: 8px 20px;
+  margin: 0;
+  align-items: baseline;
+}
+.glossary dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.glossary dd {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+
+/* ============ CLOSING ============ */
+.closing {
+  margin-top: 72px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.sign-off {
+  text-align: right;
+  margin-top: 32px;
+}
+.sign-off .thanks {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.sign-off .company {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* ============ FOOTER ============ */
+.doc-footer {
+  padding: 24px 80px;
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-3);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .page { margin: 16px auto; padding: 0 8px; }
+  .cover { padding: 40px 28px 32px; }
+  .cover h1 { font-size: 26px; }
+  .body-inner { padding: 48px 28px 56px; }
+  .section { margin-top: 56px; }
+  .section-title { font-size: 22px; }
+  .ask-box { padding: 24px 22px; }
+  .ask-title { font-size: 18px; }
+  .doc-footer { padding: 20px 28px; }
+  th, td { padding: 10px 8px; font-size: 12px; }
+  .glossary dl { grid-template-columns: 1fr; gap: 2px 0; }
+  .glossary dt { margin-top: 6px; }
+}
+
+@media print {
+  body { background: white; }
+  .page { margin: 0; padding: 0; max-width: 100%; }
+  .doc { box-shadow: none; border-radius: 0; }
+  .section { page-break-inside: avoid; }
+  .chart-card, .table-wrap, .ask-box { page-break-inside: avoid; }
+  @page { size: A4; margin: 15mm; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <article class="doc">
+
+    <!-- ============ COVER ============ -->
+    <header class="cover">
+      <div class="eyebrow">Payment Terms · Partnership Proposal</div>
+      <h1>
+        수수료 인하, 감사드립니다.<br>
+        <span class="em">다만 그 효과의 57%가 정산 지연으로 상쇄되고 있습니다.</span>
+      </h1>
+      <p class="lead-line">
+        귀사의 수수료 인하(연 +3.0M원) 제안에 감사드립니다. 다만 당사 분석 결과, <strong>정산 지연 +20영업일 조건으로 인한 Float 기회비용이 수수료 인하 효과의 약 57%를 상쇄</strong>합니다. 본 문서는 이 불균형을 해소하여, 양사 파트너십의 실질 가치를 완성할 조정안을 제안드립니다.
+      </p>
+      <div class="meta">
+        <div class="meta-item">
+          <span class="meta-label">발신</span>
+          <span class="meta-value">주식회사 어바웃피싱</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">수신</span>
+          <span class="meta-value">토스페이먼츠㈜ 이승주 Partner</span>
+          <span style="font-size: 12px; font-weight: 500; color: var(--text-2); margin-top: 2px;">Revenue Growth Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">작성일</span>
+          <span class="meta-value">2026년 4월 17일</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ BODY ============ -->
+    <div class="body-inner">
+
+      <!-- ============ §1. 상황 ============ -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">01</span>
+          <h2 class="section-title">제안 조건 검토 — 두 항목은 수용, 한 항목은 조정 요청</h2>
+        </div>
+        <p class="section-intro">
+          귀사 제안은 <strong>수수료율 인하</strong>, <strong>정산 주기 전환</strong>, <strong>정산 지연 변경</strong>의 세 항목으로 구성되어 있으며, 당사는 앞의 두 항목에 전면 동의하는 한편 세 번째 항목에 대한 재검토를 요청드립니다.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="left">항목</th>
+                <th>현행 (As-is)</th>
+                <th>귀사 제안 (To-be)</th>
+                <th>당사 입장</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="label">수수료율</td>
+                <td>2.5% <span style="color: var(--text-3); font-size: 12px;">(VAT 포함 2.75%)</span></td>
+                <td class="text-good">2.3% <span style="color: var(--text-3); font-size: 12px;">(VAT 포함 2.53%)</span></td>
+                <td style="color: var(--green); font-weight: 700;">✓ 수용</td>
+              </tr>
+              <tr>
+                <td class="label">정산 주기</td>
+                <td>월 1회</td>
+                <td>주 1회</td>
+                <td style="color: var(--green); font-weight: 700;">✓ 수용</td>
+              </tr>
+              <tr>
+                <td class="label">정산 지연</td>
+                <td>+4영업일</td>
+                <td class="text-bad">+20영업일</td>
+                <td class="text-brand">⚠ 재검토 요청</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ §2. 증거 ============ -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">02</span>
+          <h2 class="section-title">정산 지연 20영업일이 문제가 되는 이유</h2>
+        </div>
+        <p class="section-intro">
+          귀사 제안(정산 지연 +20영업일)을 당사에 적용할 경우, <strong>수수료 절감 연 +3.0M원</strong>에서 <strong>Float 기회비용 연 −1.7M원</strong>을 차감하여 실질 순 효과는 <strong>연 +1.3M원</strong>에 그칩니다. 자본비용을 Pre-Series A 실무 기준(WACC 15%)으로 반영하면 해당 순 효과는 <strong>연 −2.7M원</strong>으로 전환됩니다. 아래 두 가지 분석 — 일자별 시뮬레이션과 N영업일 민감도 — 으로 이를 증명합니다.
+        </p>
+
+        <!-- 2.1 거래일별 시뮬레이션 -->
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--brand); margin: 32px 0 12px; letter-spacing: -0.02em;">2.1 · 거래일별 정산 시점 비교</h3>
+        <p style="font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 14px;">
+          현행 방식은 거래 시점에 따라 정산 대기가 D+9에서 D+37까지 편차가 있지만, 귀사 제안 방식은 거래 시기에 관계없이 <strong>D+30 ~ D+34 구간으로 수렴</strong>합니다. 월초·월중 거래 대부분에서 정산이 늦어지는 구조입니다.
+        </p>
+
+        <div class="table-wrap table-wrap-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="left">거래일</th>
+                <th>요일</th>
+                <th>현행 D+</th>
+                <th>귀사 제안 D+</th>
+                <th>차이</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">4/1 <span style="color: var(--text-3); font-size: 11px;">월초</span></td><td>수</td><td>D+37</td><td>D+33</td><td class="text-good">−4일</td></tr>
+              <tr><td class="label">4/15</td><td>수</td><td>D+23</td><td>D+34</td><td class="text-bad">+11일</td></tr>
+              <tr class="row-ref"><td class="label">4/17<span class="tag-label tag-ref">기준</span></td><td>금</td><td>D+21</td><td>D+32</td><td class="text-bad">+11일</td></tr>
+              <tr><td class="label">4/29 <span style="color: var(--text-3); font-size: 11px;">월말</span></td><td>수</td><td>D+9</td><td>D+33</td><td class="text-bad">+24일</td></tr>
+              <tr><td class="label">5/13</td><td>수</td><td>D+22</td><td>D+30</td><td class="text-bad">+8일</td></tr>
+              <tr><td class="label">5/27 <span style="color: var(--text-3); font-size: 11px;">월말</span></td><td>수</td><td>D+8</td><td>D+30</td><td class="text-bad">+22일</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">* 월 전체 거래 가중 평균 시 현행 대비 약 10 ~ 11일 지연되며, 상시 약 38M원이 추가 예치됩니다.</p>
+
+        <!-- Interactive Simulator -->
+        <div class="simulator">
+          <div class="simulator-label">정산주기 시뮬레이터</div>
+          <div class="simulator-title">슬라이더를 조절하여 대체 N영업일 조건의 정산 시점을 확인해 보십시오</div>
+          <p class="simulator-intro">
+            당사의 본전선은 <strong style="color: var(--brand);">N = 13영업일</strong>이며, 귀사 제안은 <strong style="color: var(--amber);">N = 20영업일</strong>입니다.
+          </p>
+
+          <div class="slider-panel">
+            <div class="slider-top">
+              <div class="slider-readout">
+                <span class="n-prefix">N =</span>
+                <span class="n-value" id="nValue">13</span>
+                <span class="n-unit">영업일</span>
+              </div>
+              <div class="slider-status">
+                <div class="slider-status-label">판단</div>
+                <div class="slider-status-value text-good" id="nStatus">본전선</div>
+              </div>
+            </div>
+
+            <input type="range" id="nSlider" class="slider-input" min="3" max="30" value="13" step="1" aria-label="정산 지연 영업일">
+
+            <div class="slider-zones">
+              <div class="zone-good"><strong>이득 구간</strong>N ≤ 13</div>
+              <div class="zone-mid"><strong>경계 구간</strong>14 ~ 20</div>
+              <div class="zone-bad"><strong>손해 위험</strong>N &gt; 20</div>
+            </div>
+          </div>
+
+          <div class="table-wrap table-wrap-scroll" style="margin: 0;">
+            <table class="simulator-table">
+              <thead>
+                <tr>
+                  <th class="left">거래일</th>
+                  <th>요일</th>
+                  <th>현행 정산일</th>
+                  <th>N=<span id="nHeaderVal">13</span>영업일 정산일</th>
+                  <th>D+</th>
+                  <th>vs 현행</th>
+                </tr>
+              </thead>
+              <tbody id="simTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2.2 민감도 분석 -->
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--brand); margin: 40px 0 12px; letter-spacing: -0.02em;">2.2 · N영업일별 연간 순 효과</h3>
+        <p style="font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 14px;">
+          정산 지연 N영업일이 증가할수록 Float 기회비용이 선형적으로 증가하여, 수수료 인하 효과를 점진적으로 잠식합니다.
+        </p>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">정산 지연 영업일(N)에 따른 연간 순 효과</div>
+              <div class="chart-subtitle">자본비용 4% · 월 GMV 115M원 · 수수료 −0.22%p 고정</div>
+            </div>
+            <div class="chart-legend">
+              <span class="legend-item">
+                <span class="legend-dot" style="background: white; border-color: var(--green);"></span>
+                당사 이상선 (N=10)
+              </span>
+              <span class="legend-item">
+                <span class="legend-dot" style="background: var(--brand);"></span>
+                본전선 (N=13)
+              </span>
+              <span class="legend-item">
+                <span class="legend-dot" style="background: var(--amber);"></span>
+                귀사 제안 (N=20)
+              </span>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="sensChart"></canvas>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top: 16px;">
+          <table>
+            <thead>
+              <tr>
+                <th class="left">정산 지연 (N)</th>
+                <th>평균 대기일</th>
+                <th>Float 효과 (연)</th>
+                <th>수수료 절감 (연)</th>
+                <th>순 효과 (연)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">5영업일</td><td>9일</td><td class="text-good">+1.7M원</td><td>+3.0M원</td><td class="text-good">+4.7M원</td></tr>
+              <tr><td class="label">10영업일 <span style="color: var(--text-3); font-size: 11px;">당사 이상선</span></td><td>16일</td><td class="text-good">+0.6M원</td><td>+3.0M원</td><td class="text-good">+3.6M원</td></tr>
+              <tr class="row-break"><td class="label">13영업일<span class="tag-label tag-break">본전선</span></td><td>20일</td><td>0</td><td>+3.0M원</td><td class="text-good">+3.0M원</td></tr>
+              <tr><td class="label">15영업일</td><td>23일</td><td class="text-bad">−0.6M원</td><td>+3.0M원</td><td class="text-good">+2.4M원</td></tr>
+              <tr class="row-toss"><td class="label">20영업일<span class="tag-label tag-toss">귀사 제안</span></td><td>30일</td><td class="text-bad">−1.7M원</td><td>+3.0M원</td><td class="text-mid">+1.3M원</td></tr>
+              <tr><td class="label">25영업일</td><td>37일</td><td class="text-bad">−2.6M원</td><td>+3.0M원</td><td class="text-mid">+0.4M원</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pullquote">
+          <div class="pullquote-text">
+            <strong>수수료 인하 효과의 57%가 정산 지연으로 새고 있습니다.</strong> Pre-Series A 실무 자본비용(WACC 15%)을 반영하면, 이 딜은 당사에게 <strong>연 −2.7M원의 손해</strong>로 전환됩니다.
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top: 20px;">
+          <table>
+            <thead>
+              <tr>
+                <th class="left">자본비용 시나리오</th>
+                <th>Float 기회비용/년</th>
+                <th>순 효과/년</th>
+                <th>판단</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">4% <span style="color: var(--text-3); font-size: 11px;">기업 평균</span></td><td>1.7M원</td><td class="text-mid">+1.3M원</td><td class="text-mid">소폭 이득</td></tr>
+              <tr><td class="label">8% <span style="color: var(--text-3); font-size: 11px;">보수적</span></td><td>3.1M원</td><td class="text-mid">−0.1M원</td><td class="text-mid">본전</td></tr>
+              <tr class="row-ref"><td class="label">15% <span style="color: var(--text-3); font-size: 11px;">Pre-A 실무 기준</span></td><td>5.7M원</td><td class="text-bad">−2.7M원</td><td class="text-bad">손해</td></tr>
+              <tr><td class="label">20% <span style="color: var(--text-3); font-size: 11px;">초기 스타트업</span></td><td>7.7M원</td><td class="text-bad">−4.7M원</td><td class="text-bad">큰 손해</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="glossary">
+          <div class="glossary-label">용어 설명</div>
+          <dl>
+            <dt>GMV (Gross Merchandise Value)</dt>
+            <dd>총 거래액. 특정 기간 동안 플랫폼에서 발생한 전체 거래 대금의 합계.</dd>
+            <dt>Float</dt>
+            <dd>결제 발생 시점과 정산 수령 시점 사이에 PG사에 일시 묶여 있는 자금.</dd>
+            <dt>기회비용</dt>
+            <dd>해당 자금을 다른 용도로 활용했을 때 얻을 수 있었던 잠재적 수익. 자본비용률을 곱해 산출.</dd>
+            <dt>WACC (Weighted Average Cost of Capital)</dt>
+            <dd>가중평균자본비용. 스타트업은 일반 기업 대비 상대적으로 높게 형성됨(통상 15~20%).</dd>
+            <dt>Pre-Series A</dt>
+            <dd>시리즈 A 유치 직전의 초기 스타트업 단계. 당사 현 위치.</dd>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ============ §3. 요청 ============ -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">03</span>
+          <h2 class="section-title">당사의 요청</h2>
+        </div>
+
+        <div class="ask-box">
+          <div class="ask-label">Key Ask</div>
+          <div class="ask-title">
+            <span class="hl">정산 지연 조정: +20영업일 → +13영업일 이하</span>
+          </div>
+          <div class="table-wrap" style="margin: 0; background: white; border: 1px solid var(--border);">
+            <table>
+              <thead>
+                <tr>
+                  <th class="left">조건</th>
+                  <th>귀사 제안</th>
+                  <th>당사 요청</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="label">수수료율</td>
+                  <td style="color: var(--text-2);">2.3% (VAT 포함 2.53%)</td>
+                  <td style="color: var(--text-2);">그대로 수용</td>
+                </tr>
+                <tr>
+                  <td class="label">정산 주기</td>
+                  <td style="color: var(--text-2);">주 1회</td>
+                  <td style="color: var(--text-2);">그대로 수용</td>
+                </tr>
+                <tr>
+                  <td class="label">정산 지연</td>
+                  <td class="text-bad">+20영업일</td>
+                  <td class="text-brand">+13영업일 이하 <span style="color: var(--text-2); font-weight: 500; font-size: 12px;">(+10 이상적)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-2); line-height: 1.7; margin-top: 16px;">
+          + 13영업일은 당사 현금흐름의 본전선입니다. 이 기준 이하에서 양사는 <strong>수수료 인하 효과가 그대로 실현되는 안정적 파트너십 구조</strong>를 확보하게 되며, 당사의 GMV 성장에 따라 귀사의 결제 매출 기여도도 비례하여 상승합니다.
+        </p>
+      </section>
+
+      <!-- ============ 결론 ============ -->
+      <section class="section closing">
+        <p style="font-size: 15px; line-height: 1.75; color: var(--text); margin-bottom: 16px;">
+          수수료 인하 결정에 다시 한번 감사드립니다. 당사는 본 조정안을 통해 양사가 함께 성장할 수 있는 장기 파트너십 구조를 제안드립니다.
+        </p>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--text); margin-top: 8px; padding: 14px 18px; background: var(--bg-2); border-left: 3px solid var(--brand); border-radius: 0 6px 6px 0;">
+          <strong style="color: var(--brand); font-weight: 700;">다음 단계 ·</strong> Revenue Growth Team 내부 검토 후 미팅 일정 회신 부탁드립니다.
+        </p>
+
+        <div class="sign-off">
+          <div class="thanks">감사합니다.</div>
+          <div class="company">주식회사 어바웃피싱 드림</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="doc-footer">
+      <span>주식회사 어바웃피싱 · 정산 조건 재검토 요청</span>
+      <span>2026.04.17 · v5</span>
+    </footer>
+  </article>
+</div>
+
+<script>
+// ============ Chart.js: Sensitivity Analysis ============
+(function() {
+  const ctx = document.getElementById('sensChart');
+  if (!ctx) return;
+
+  const Ns = [];
+  const nets = [];
+  for (let n = 3; n <= 30; n++) {
+    Ns.push(n);
+    const avgWait = 2 + 1.4 * n;
+    const floatCost = (avgWait - 20) * 3.83 * 0.04;
+    const net = 3 - floatCost;
+    nets.push(+net.toFixed(2));
+  }
+
+  const pointColors = Ns.map(n => {
+    if (n === 20) return '#B45309';
+    if (n === 13) return '#1D4ED8';
+    if (n === 10) return '#047857';
+    return 'rgba(0,0,0,0)';
+  });
+  const pointRadii = Ns.map(n => (n === 10 || n === 13 || n === 20) ? 7 : 0);
+  const pointBorderColors = Ns.map(n => {
+    if (n === 10 || n === 13 || n === 20) return '#FFFFFF';
+    return 'rgba(0,0,0,0)';
+  });
+
+  const zoneShading = {
+    id: 'zoneShading',
+    beforeDatasetsDraw(chart) {
+      const { ctx, chartArea: { top, bottom, left, right }, scales: { y } } = chart;
+      const zeroY = y.getPixelForValue(0);
+      ctx.save();
+      ctx.fillStyle = 'rgba(4,120,87,0.05)';
+      ctx.fillRect(left, top, right - left, zeroY - top);
+      ctx.fillStyle = 'rgba(185,28,28,0.05)';
+      ctx.fillRect(left, zeroY, right - left, bottom - zeroY);
+      ctx.restore();
+    }
+  };
+
+  const annotations = {
+    id: 'annotations',
+    afterDatasetsDraw(chart) {
+      const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
+      ctx.save();
+      const x13 = x.getPixelForValue(13);
+      ctx.strokeStyle = 'rgba(29,78,216,0.35)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(x13, top);
+      ctx.lineTo(x13, bottom);
+      ctx.stroke();
+      const x20 = x.getPixelForValue(20);
+      ctx.strokeStyle = 'rgba(180,83,9,0.35)';
+      ctx.beginPath();
+      ctx.moveTo(x20, top);
+      ctx.lineTo(x20, bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#1D4ED8';
+      ctx.font = '600 11px Pretendard, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('N=13 본전선', x13, top + 14);
+      ctx.fillStyle = '#B45309';
+      ctx.fillText('N=20 귀사 제안', x20, top + 14);
+      ctx.restore();
+    }
+  };
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Ns,
+      datasets: [{
+        label: '연간 순 효과',
+        data: nets,
+        borderColor: '#1D4ED8',
+        backgroundColor: 'rgba(29,78,216,0.08)',
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.15,
+        pointRadius: pointRadii,
+        pointBackgroundColor: pointColors,
+        pointBorderColor: pointBorderColors,
+        pointBorderWidth: 2,
+        pointHoverRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#FFFFFF',
+          borderColor: '#E2E8F0',
+          borderWidth: 1,
+          titleColor: '#0A0F1E',
+          bodyColor: '#475569',
+          padding: 12,
+          titleFont: { weight: 700, size: 13, family: 'Pretendard' },
+          bodyFont: { size: 12, family: 'Pretendard' },
+          displayColors: false,
+          callbacks: {
+            title: items => 'N = ' + items[0].label + '영업일',
+            label: item => {
+              const avgWait = (2 + 1.4 * item.label).toFixed(0);
+              return ['연간 순 효과: ' + (item.raw >= 0 ? '+' : '') + item.raw + 'M원',
+                      '평균 대기일: 약 ' + avgWait + '일'];
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: '정산 지연 N영업일', color: '#64748B', font: { size: 12, family: 'Pretendard', weight: 600 }, padding: 10 },
+          grid: { color: '#F1F5F9' },
+          border: { color: '#CBD5E1' },
+          ticks: { color: '#64748B', font: { size: 11, family: 'Pretendard' }, stepSize: 2 }
+        },
+        y: {
+          title: { display: true, text: '연 순 효과 (M원)', color: '#64748B', font: { size: 12, family: 'Pretendard', weight: 600 }, padding: 10 },
+          grid: {
+            color: ctx => ctx.tick.value === 0 ? '#CBD5E1' : '#F1F5F9',
+            lineWidth: ctx => ctx.tick.value === 0 ? 1.5 : 1
+          },
+          border: { color: '#CBD5E1' },
+          ticks: { color: '#64748B', font: { size: 11, family: 'Pretendard' }, callback: v => (v >= 0 ? '+' : '') + v + 'M' }
+        }
+      }
+    },
+    plugins: [zoneShading, annotations]
+  });
+})();
+
+// ============ Interactive Simulator ============
+(function() {
+  const slider = document.getElementById('nSlider');
+  const nReadout = document.getElementById('nValue');
+  const nHeaderVal = document.getElementById('nHeaderVal');
+  const statusEl = document.getElementById('nStatus');
+  const tbody = document.getElementById('simTableBody');
+  if (!slider || !tbody) return;
+
+  const HOLIDAYS = new Set(['2026-05-01', '2026-05-05']);
+
+  function dayKey(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function isBusinessDay(d) {
+    const day = d.getDay();
+    if (day === 0 || day === 6) return false;
+    return !HOLIDAYS.has(dayKey(d));
+  }
+  function weekEndFriday(d) {
+    const date = new Date(d);
+    const day = date.getDay();
+    let delta;
+    if (day === 0) delta = -2;
+    else if (day === 6) delta = -1;
+    else delta = 5 - day;
+    date.setDate(date.getDate() + delta);
+    return date;
+  }
+  function addBusinessDays(startDate, N) {
+    const current = new Date(startDate);
+    let count = 0;
+    while (count < N) {
+      current.setDate(current.getDate() + 1);
+      if (isBusinessDay(current)) count++;
+    }
+    return current;
+  }
+  function calcSettlement(txDate, N) {
+    const weekEnd = weekEndFriday(txDate);
+    return addBusinessDays(weekEnd, N);
+  }
+  function formatDate(d) { return (d.getMonth() + 1) + '/' + d.getDate(); }
+  function dayDiff(from, to) { return Math.round((to - from) / 86400000); }
+  function parseDate(s) {
+    const [y, m, d] = s.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+
+  const TRANSACTIONS = [
+    { date: '2026-04-01', label: '4/1',  note: '월초', currentSettle: '2026-05-08' },
+    { date: '2026-04-15', label: '4/15', note: '',     currentSettle: '2026-05-08' },
+    { date: '2026-04-17', label: '4/17', note: '기준', currentSettle: '2026-05-08', isRef: true },
+    { date: '2026-04-29', label: '4/29', note: '월말', currentSettle: '2026-05-08' },
+    { date: '2026-05-13', label: '5/13', note: '',     currentSettle: '2026-06-04' },
+    { date: '2026-05-27', label: '5/27', note: '월말', currentSettle: '2026-06-04' },
+  ];
+
+  function getStatus(N) {
+    if (N <= 10) return { label: '대폭 이득', cls: 'text-good' };
+    if (N === 11 || N === 12) return { label: '이득', cls: 'text-good' };
+    if (N === 13) return { label: '본전선', cls: 'text-good' };
+    if (N <= 19) return { label: '소폭 이득', cls: 'text-mid' };
+    if (N === 20) return { label: '경계 (귀사 제안)', cls: 'text-mid' };
+    if (N <= 25) return { label: '본전 근처', cls: 'text-mid' };
+    return { label: '손해 전환', cls: 'text-bad' };
+  }
+
+  function diffClass(diff) {
+    if (diff < 0) return 'text-good';
+    if (diff === 0) return 'text-mid';
+    if (diff <= 5) return 'text-mid';
+    return 'text-bad';
+  }
+  function diffText(diff) {
+    if (diff === 0) return '±0일';
+    return (diff > 0 ? '+' : '') + diff + '일';
+  }
+
+  function renderRows(N) {
+    nReadout.textContent = N;
+    nHeaderVal.textContent = N;
+    const status = getStatus(N);
+    statusEl.textContent = status.label;
+    statusEl.className = 'slider-status-value ' + status.cls;
+
+    const html = TRANSACTIONS.map(tx => {
+      const txDate = parseDate(tx.date);
+      const settle = calcSettlement(txDate, N);
+      const currentSettle = parseDate(tx.currentSettle);
+      const dPlus = dayDiff(txDate, settle);
+      const currentDplus = dayDiff(txDate, currentSettle);
+      const diff = dPlus - currentDplus;
+      const weekday = WEEKDAY[txDate.getDay()];
+      const rowClass = tx.isRef ? 'row-ref' : '';
+      const noteStr = tx.note && !tx.isRef ? ' <span style="color: var(--text-3); font-size: 11px;">(' + tx.note + ')</span>' : '';
+      const refTag = tx.isRef ? '<span class="tag-label tag-ref">기준</span>' : '';
+
+      return '<tr class="' + rowClass + '">' +
+        '<td class="label">' + tx.label + noteStr + refTag + '</td>' +
+        '<td>' + weekday + '</td>' +
+        '<td>' + formatDate(currentSettle) + '</td>' +
+        '<td class="sim-value">' + formatDate(settle) + '</td>' +
+        '<td class="sim-dplus">D+' + dPlus + '</td>' +
+        '<td class="' + diffClass(diff) + '">' + diffText(diff) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    tbody.innerHTML = html;
+  }
+
+  slider.addEventListener('input', (e) => { renderRows(parseInt(e.target.value, 10)); });
+  renderRows(parseInt(slider.value, 10));
+})();
+</script>
+</body>
+</html>
