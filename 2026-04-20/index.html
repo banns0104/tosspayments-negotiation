@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정산 주기 비교 — 대기일수 관점 재검토 · 어바웃피싱</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --text: #0A0F1E;
+  --text-2: #475569;
+  --text-3: #94A3B8;
+  --bg: #FFFFFF;
+  --bg-2: #F8FAFC;
+  --bg-3: #F1F5F9;
+  --border: #E2E8F0;
+  --brand: #1D4ED8;
+  --brand-bg: #EFF6FF;
+  --green: #047857;
+  --green-bg: #ECFDF5;
+  --amber: #B45309;
+  --amber-bg: #FFFBEB;
+  --red: #B91C1C;
+  --red-bg: #FEF2F2;
+  --purple: #7C3AED;
+  --purple-bg: #F3E8FF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: #E8EBF0;
+  line-height: 1.6;
+  letter-spacing: -0.012em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 920px; margin: 40px auto; padding: 0 16px; }
+.doc {
+  background: var(--bg);
+  border-radius: 14px;
+  box-shadow: 0 20px 40px -20px rgba(15,23,42,.15), 0 4px 8px rgba(15,23,42,.04);
+  overflow: hidden;
+}
+
+.cover {
+  padding: 56px 64px 40px;
+  background: linear-gradient(180deg, #FAFBFC 0%, #FFFFFF 100%);
+  border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--brand); }
+.cover h1 {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.cover h1 .em {
+  background: linear-gradient(180deg, transparent 65%, rgba(239,68,68,0.18) 65%);
+  padding: 0 2px;
+}
+.cover .lead-line {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-2);
+  max-width: 700px;
+}
+.cover .lead-line strong { color: var(--text); font-weight: 700; }
+
+.body-inner { padding: 48px 64px 56px; }
+
+.section { margin-top: 48px; }
+.section:first-child { margin-top: 0; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--text);
+}
+.section-num-lg {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.08em;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  flex: 1;
+}
+
+p {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+p strong { font-weight: 700; }
+
+.pullquote {
+  margin: 20px 0;
+  padding: 22px 28px;
+  background: var(--red-bg);
+  border-left: 4px solid var(--red);
+  border-radius: 0 10px 10px 0;
+}
+.pullquote-text {
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.pullquote-text strong { color: var(--red); font-weight: 800; }
+
+/* Key Numbers */
+.key-nums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.kn-card {
+  padding: 18px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: center;
+}
+.kn-label {
+  font-size: 11px;
+  color: var(--text-2);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.kn-value {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.kn-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 6px;
+}
+.kn-card.red .kn-value { color: var(--red); }
+.kn-card.amber .kn-value { color: var(--amber); }
+.kn-card.green .kn-value { color: var(--green); }
+.kn-card.brand .kn-value { color: var(--brand); }
+
+/* Calendar */
+.cal-wrap {
+  margin: 20px 0;
+  padding: 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.cal-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.cal-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 16px;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.cal-month {
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+.cal-mhd {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 6px 2px;
+  color: var(--text);
+}
+.cal-msub {
+  font-size: 10px;
+  color: var(--text-2);
+  text-align: center;
+  padding: 0 6px 8px;
+}
+.cal-dlb {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0 4px;
+}
+.cal-dl {
+  text-align: center;
+  font-size: 9px;
+  color: var(--text-3);
+  padding: 3px 0;
+  font-weight: 600;
+}
+.cal-dl.u { color: var(--red); }
+.cal-dl.s { color: var(--brand); }
+.cal-dg {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  padding: 2px 4px 8px;
+}
+.cal-dc {
+  min-height: 52px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 1px;
+  position: relative;
+}
+.cal-dn {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text);
+  font-weight: 500;
+}
+.cal-dn.u { color: var(--red); }
+.cal-dn.s { color: var(--brand); }
+.cal-dn.hol { color: var(--purple); font-weight: 600; }
+
+.cal-bdg {
+  font-size: 7.5px;
+  font-weight: 600;
+  border-radius: 2px;
+  padding: 1px 2px;
+  margin-top: 1px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.cal-hbdg {
+  font-size: 7px;
+  color: var(--purple);
+  text-align: center;
+  line-height: 1.3;
+  margin-top: 1px;
+  width: 100%;
+  font-weight: 500;
+}
+
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 0.5px solid var(--border);
+}
+.cal-li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+.cal-ld {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Wait Days Table */
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 16px 0;
+  background: white;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; font-feature-settings: "tnum" 1; }
+th {
+  background: #F8FAFC;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 11px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+}
+tbody tr:last-child td { border-bottom: none; }
+td.label {
+  font-weight: 700;
+  background: var(--bg-2);
+  text-align: left;
+  padding-left: 18px;
+}
+tr.row-m4 td.wait-cell { background: var(--amber-bg); color: var(--amber); font-weight: 700; }
+tr.row-w20 td.wait-cell { background: var(--red-bg); color: var(--red); font-weight: 700; }
+
+/* Flip Summary */
+.flip-box {
+  margin: 28px 0;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FEE2E2 100%);
+  border: 2px solid #FDE68A;
+  border-radius: 14px;
+}
+
+/* Weekly Flow Diagram */
+.flow-diagram {
+  margin: 24px 0;
+  padding: 28px 24px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+.flow-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  text-align: center;
+}
+.flow-sub {
+  font-size: 11.5px;
+  color: var(--text-2);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.flow-svg {
+  display: block;
+  margin: 0 auto;
+  min-width: 640px;
+  max-width: 100%;
+}
+.flow-caption {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg-2);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 6px 6px 0;
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.65;
+}
+.flow-caption strong { color: var(--amber); font-weight: 700; }
+.flip-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.flip-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 12px;
+  letter-spacing: -0.025em;
+}
+.flip-desc {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.75;
+}
+.flip-desc strong { font-weight: 700; color: var(--red); }
+
+/* Reframe */
+.reframe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+.reframe-card {
+  padding: 20px 22px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.reframe-card.agree { border-left: 4px solid var(--green); }
+.reframe-card.disagree { border-left: 4px solid var(--red); }
+.reframe-card h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.reframe-card.agree h4 { color: var(--green); }
+.reframe-card.disagree h4 { color: var(--red); }
+.reframe-card p {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* Ask Box */
+.ask-box {
+  margin-top: 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F0F9FF 100%);
+  border: 2px solid #BFDBFE;
+  border-radius: 14px;
+}
+.ask-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.ask-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+.ask-title .hl { color: var(--brand); }
+
+.doc-footer {
+  padding: 20px 64px;
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .page { margin: 16px auto; padding: 0 8px; }
+  .cover { padding: 36px 24px 24px; }
+  .cover h1 { font-size: 22px; }
+  .body-inner { padding: 32px 24px 40px; }
+  .section-title { font-size: 18px; }
+  .cal-grid { grid-template-columns: 1fr; }
+  .reframe-grid { grid-template-columns: 1fr; }
+  .doc-footer { padding: 16px 24px; }
+  th, td { padding: 8px 6px; font-size: 11.5px; }
+  .kn-value { font-size: 22px; }
+}
+
+@media print {
+  body { background: white; }
+  .page { margin: 0; padding: 0; max-width: 100%; }
+  .doc { box-shadow: none; border-radius: 0; }
+  .section { page-break-inside: avoid; }
+  @page { size: A4; margin: 12mm; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <article class="doc">
+
+    <!-- COVER -->
+    <header class="cover">
+      <div class="eyebrow">Response · 정산 주기 논의 추가 검토</div>
+      <h1>
+        '매주 정산' 구조의 안정성은 동의합니다.<br>
+        <span class="em">다만 귀사 캘린더 기준으로도 평균 수령이 15일 늦어집니다.</span>
+      </h1>
+      <p class="lead-line">
+        보내주신 캘린더를 기준으로 <strong>동일한 4월 거래에 대한 실제 수령 시점</strong>을 재계산한 결과입니다. '매주 정산'과 '평균 수령 시점'을 분리하여 검토하였으니 함께 확인 부탁드립니다.
+      </p>
+    </header>
+
+    <div class="body-inner">
+
+      <!-- §1. Yes — 먼저 동의 -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">01</span>
+          <h2 class="section-title">귀사 주장 중 동의하는 부분</h2>
+        </div>
+        <p>
+          귀사께서 강조하신 <strong>"매주 정산이 이루어지는 구조"</strong>라는 운영적 장점에 대해서는 당사도 전적으로 동의합니다.
+          월 1회 일괄 수령 대비 주 1회 분산 수령은 분명히 <strong>예측 가능성과 운영 안정성을 향상</strong>시키는 구조입니다.
+          본 문서의 목적은 이 구조 자체를 반박하는 것이 아니라, <strong>'수령 빈도'와 '수령 시점'은 서로 다른 개념</strong>이며 둘 중 후자에 대한 정량적 재검토가 필요함을 공유드리는 것입니다.
+        </p>
+      </section>
+
+      <!-- §2. But — 귀사 캘린더 재계산 -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">02</span>
+          <h2 class="section-title">귀사 캘린더로 재계산한 실제 수령 시점</h2>
+        </div>
+
+        <p>
+          보내주신 캘린더(4월 거래 → 5월 첫 정산 → 6월 안정화)를 그대로 사용하되,
+          <strong>각 정산일이 실제 거래일로부터 며칠 뒤인지</strong>를 계산하면 아래와 같습니다.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th rowspan="2" class="label" style="vertical-align: middle;">거래 주차</th>
+                <th rowspan="2" style="vertical-align: middle;">거래 기간</th>
+                <th colspan="2" style="background: var(--amber-bg); color: var(--amber); border-right: 1px solid var(--border);">M+4 (기존)</th>
+                <th colspan="2" style="background: var(--red-bg); color: var(--red);">W+20 (귀사 제안)</th>
+              </tr>
+              <tr>
+                <th style="background: var(--amber-bg); color: var(--amber); font-weight: 600;">정산일</th>
+                <th style="background: var(--amber-bg); color: var(--amber); font-weight: 600; border-right: 1px solid var(--border);">평균 대기일</th>
+                <th style="background: var(--red-bg); color: var(--red);">정산일</th>
+                <th style="background: var(--red-bg); color: var(--red);">평균 대기일</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-w20">
+                <td class="label">W1</td>
+                <td>4/6 ~ 4/10</td>
+                <td style="color: var(--amber);">5/8 (금)</td>
+                <td class="wait-cell" style="background: var(--amber-bg); color: var(--amber); font-weight: 500;">30일</td>
+                <td>5/12 (화)</td>
+                <td class="wait-cell">34일</td>
+              </tr>
+              <tr class="row-w20">
+                <td class="label">W2</td>
+                <td>4/13 ~ 4/17</td>
+                <td style="color: var(--amber);">5/8 (금)</td>
+                <td class="wait-cell" style="background: var(--amber-bg); color: var(--amber); font-weight: 500;">23일</td>
+                <td>5/19 (화)</td>
+                <td class="wait-cell">34일</td>
+              </tr>
+              <tr class="row-w20">
+                <td class="label">W3</td>
+                <td>4/20 ~ 4/24</td>
+                <td style="color: var(--amber);">5/8 (금)</td>
+                <td class="wait-cell" style="background: var(--amber-bg); color: var(--amber); font-weight: 500;">16일</td>
+                <td>5/27 (수)</td>
+                <td class="wait-cell">35일</td>
+              </tr>
+              <tr class="row-w20">
+                <td class="label">W4</td>
+                <td>4/27 ~ 5/1</td>
+                <td style="color: var(--amber);">5/8 (금)</td>
+                <td class="wait-cell" style="background: var(--amber-bg); color: var(--amber); font-weight: 500;">9일</td>
+                <td>6/2 (화)</td>
+                <td class="wait-cell">34일</td>
+              </tr>
+              <tr style="background: var(--bg-3);">
+                <td class="label" colspan="2" style="background: #E2E8F0;">4주 평균</td>
+                <td colspan="2" style="background: var(--amber-bg); color: var(--amber); font-weight: 700; font-size: 15px;">19.5일</td>
+                <td colspan="2" style="background: var(--red-bg); color: var(--red); font-weight: 800; font-size: 15px;">34.3일</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-size: 12.5px; color: var(--text-2); margin-top: 8px;">
+          ※ 평균 대기일 = (정산일 − 거래 기간 중간 시점). 귀사 캘린더의 5월 공휴일(5/1, 5/5) 및 6월 현충일 대체(6/8) 반영.
+          W+20 계산은 거래주 마감 금요일 + 20영업일, 공휴일 스킵 기준(귀사 캘린더 addBD 로직과 동일).
+        </p>
+
+        <div class="key-nums">
+          <div class="kn-card amber">
+            <div class="kn-label">M+4 평균 대기</div>
+            <div class="kn-value">20일</div>
+            <div class="kn-sub">기준값</div>
+          </div>
+          <div class="kn-card red">
+            <div class="kn-label">W+20 평균 대기</div>
+            <div class="kn-value">34일</div>
+            <div class="kn-sub">귀사 캘린더 기준</div>
+          </div>
+          <div class="kn-card red">
+            <div class="kn-label">수령 지연</div>
+            <div class="kn-value">+15일</div>
+            <div class="kn-sub">M+4 대비 증가</div>
+          </div>
+          <div class="kn-card brand">
+            <div class="kn-label">추가 예치액</div>
+            <div class="kn-value">+57M원</div>
+            <div class="kn-sub">15일 × 3.83M/일</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- §3. Flip — 핵심 팩트 -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">03</span>
+          <h2 class="section-title">'매주 수령'은 '빠르게 수령'이 아닙니다</h2>
+        </div>
+
+        <p>
+          '매주 정산'의 구조적 특성상, 이번 주에 수령하는 금액은 <strong>약 4주 전에 발생한 거래분</strong>입니다.
+          아래 다이어그램은 4월 거래 4주치가 실제로 언제 수령되는지를 보여줍니다.
+        </p>
+
+        <div class="flow-diagram">
+          <div class="flow-title">4월 거래 → 수령 시점 시각화</div>
+          <div class="flow-sub">각 거래주가 M+4 / W+20 방식에서 언제 수령되는지</div>
+
+          <svg class="flow-svg" viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="M+4 vs W+20 수령 시점 다이어그램">
+            <!-- Left side: Trading Weeks -->
+            <text x="80" y="28" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#475569">거래 주차</text>
+
+            <!-- W1 -->
+            <rect x="20" y="48" width="120" height="38" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
+            <text x="80" y="66" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#92400E">W1</text>
+            <text x="80" y="80" text-anchor="middle" font-family="Pretendard" font-size="10.5" fill="#92400E">4/6 ~ 4/10</text>
+
+            <!-- W2 -->
+            <rect x="20" y="108" width="120" height="38" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
+            <text x="80" y="126" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#92400E">W2</text>
+            <text x="80" y="140" text-anchor="middle" font-family="Pretendard" font-size="10.5" fill="#92400E">4/13 ~ 4/17</text>
+
+            <!-- W3 -->
+            <rect x="20" y="168" width="120" height="38" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
+            <text x="80" y="186" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#92400E">W3</text>
+            <text x="80" y="200" text-anchor="middle" font-family="Pretendard" font-size="10.5" fill="#92400E">4/20 ~ 4/24</text>
+
+            <!-- W4 -->
+            <rect x="20" y="228" width="120" height="38" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
+            <text x="80" y="246" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#92400E">W4</text>
+            <text x="80" y="260" text-anchor="middle" font-family="Pretendard" font-size="10.5" fill="#92400E">4/27 ~ 5/1</text>
+
+            <!-- M+4 Column Header -->
+            <text x="315" y="28" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#B45309">M+4 방식 — 5/8 일괄 수령</text>
+
+            <!-- M+4 Converging Arrows: all 4 weeks → 5/8 -->
+            <defs>
+              <marker id="arrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#B45309"/>
+              </marker>
+              <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#B91C1C"/>
+              </marker>
+            </defs>
+
+            <!-- M+4 box on right -->
+            <rect x="250" y="140" width="130" height="60" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="1.5"/>
+            <text x="315" y="164" text-anchor="middle" font-family="Pretendard" font-size="14" font-weight="800" fill="#B45309">5/8 (금)</text>
+            <text x="315" y="184" text-anchor="middle" font-family="Pretendard" font-size="10.5" fill="#92400E">4주 치 일괄 수령</text>
+
+            <!-- Lines from each W to 5/8 box -->
+            <path d="M 140 67 Q 195 67 250 155" stroke="#B45309" stroke-width="1.5" fill="none" marker-end="url(#arrowA)" opacity="0.7"/>
+            <path d="M 140 127 Q 195 127 250 165" stroke="#B45309" stroke-width="1.5" fill="none" marker-end="url(#arrowA)" opacity="0.7"/>
+            <path d="M 140 187 Q 195 187 250 175" stroke="#B45309" stroke-width="1.5" fill="none" marker-end="url(#arrowA)" opacity="0.7"/>
+            <path d="M 140 247 Q 195 247 250 185" stroke="#B45309" stroke-width="1.5" fill="none" marker-end="url(#arrowA)" opacity="0.7"/>
+
+            <!-- Avg wait text for M+4 -->
+            <text x="315" y="222" text-anchor="middle" font-family="Pretendard" font-size="11" font-weight="600" fill="#B45309">평균 대기 19.5일</text>
+
+            <!-- Divider -->
+            <line x1="420" y1="40" x2="420" y2="290" stroke="#E2E8F0" stroke-width="0.5" stroke-dasharray="4 4"/>
+
+            <!-- W+20 Column Header -->
+            <text x="560" y="28" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#B91C1C">W+20 방식 — 분산 수령</text>
+
+            <!-- W+20 settlement boxes (individual for each W) -->
+            <rect x="490" y="48" width="140" height="38" rx="6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.5"/>
+            <text x="560" y="66" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="800" fill="#B91C1C">5/12 (화)</text>
+            <text x="560" y="80" text-anchor="middle" font-family="Pretendard" font-size="10" fill="#991B1B">대기 34일</text>
+
+            <rect x="490" y="108" width="140" height="38" rx="6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.5"/>
+            <text x="560" y="126" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="800" fill="#B91C1C">5/19 (화)</text>
+            <text x="560" y="140" text-anchor="middle" font-family="Pretendard" font-size="10" fill="#991B1B">대기 34일</text>
+
+            <rect x="490" y="168" width="140" height="38" rx="6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.5"/>
+            <text x="560" y="186" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="800" fill="#B91C1C">5/27 (수)</text>
+            <text x="560" y="200" text-anchor="middle" font-family="Pretendard" font-size="10" fill="#991B1B">대기 35일</text>
+
+            <rect x="490" y="228" width="140" height="38" rx="6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.5"/>
+            <text x="560" y="246" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="800" fill="#B91C1C">6/2 (화)</text>
+            <text x="560" y="260" text-anchor="middle" font-family="Pretendard" font-size="10" fill="#991B1B">대기 34일</text>
+
+            <!-- Lines from each W to each W+20 box -->
+            <path d="M 140 67 L 487 67" stroke="#B91C1C" stroke-width="1.5" fill="none" marker-end="url(#arrowR)" opacity="0.8"/>
+            <path d="M 140 127 L 487 127" stroke="#B91C1C" stroke-width="1.5" fill="none" marker-end="url(#arrowR)" opacity="0.8"/>
+            <path d="M 140 187 L 487 187" stroke="#B91C1C" stroke-width="1.5" fill="none" marker-end="url(#arrowR)" opacity="0.8"/>
+            <path d="M 140 247 L 487 247" stroke="#B91C1C" stroke-width="1.5" fill="none" marker-end="url(#arrowR)" opacity="0.8"/>
+
+            <!-- Avg wait text for W+20 -->
+            <text x="560" y="290" text-anchor="middle" font-family="Pretendard" font-size="11" font-weight="700" fill="#B91C1C">평균 대기 34.3일</text>
+
+            <!-- Gap indicator at bottom -->
+            <rect x="100" y="310" width="500" height="22" rx="4" fill="#FEF2F2" stroke="#FECACA" stroke-width="0.5"/>
+            <text x="350" y="325" text-anchor="middle" font-family="Pretendard" font-size="12" font-weight="700" fill="#B91C1C">귀사 캘린더 기준 평균 수령 시점 지연: +14.8일</text>
+          </svg>
+        </div>
+
+        <div class="flow-caption">
+          <strong>핵심:</strong> W+20 방식은 매주 분산 수령하므로 '매주 돈이 들어온다'는 장점은 있으나, 각 거래주는 약 4주 후에 정산되어 <strong>평균 수령 시점은 15일 늦어집니다.</strong> 빈도와 시점은 별개의 지표입니다.
+        </div>
+      </section>
+
+      <!-- §4. Reframe — 빈도와 지연 분리 -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">04</span>
+          <h2 class="section-title">'빈도'와 '지연'은 분리된 파라미터입니다</h2>
+        </div>
+        <p>
+          귀사 제안은 두 개의 독립적 파라미터로 구성됩니다. 빈도(주 1회)와 지연(+20영업일). 당사는 전자에는 동의하며, 후자에 대한 조정을 요청드립니다.
+        </p>
+
+        <div class="reframe-grid">
+          <div class="reframe-card agree">
+            <h4>✓ 당사가 동의하는 부분</h4>
+            <p>
+              <strong>빈도 = 주 1회 정산</strong><br>
+              예측 가능성·운영 안정성 확보. 당사 자금 계획 수립에 유리.
+              이 파라미터는 그대로 유지해 주시기 바랍니다.
+            </p>
+          </div>
+          <div class="reframe-card disagree">
+            <h4>✗ 당사가 조정을 요청하는 부분</h4>
+            <p>
+              <strong>지연 = +20영업일</strong><br>
+              평균 대기일을 현행 대비 15일 증가시키는 주된 원인.
+              <strong>+13영업일 이하</strong>로 조정 시 빈도 장점을 유지하면서 시점 악화가 해소됩니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- §5. 조정 가능 범위 -->
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num-lg">05</span>
+          <h2 class="section-title">조정 가능 범위 제안</h2>
+        </div>
+        <p>
+          앞선 회신에서 +13영업일(본전선)을 제시드린 바 있습니다. 다만 귀사 측 내부 검토 상황을 고려하여,
+          당사가 수용 가능한 전체 범위를 아래와 같이 투명하게 공유드립니다. N값에 따른 시나리오별 대기일과 당사 평가입니다.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="label" style="text-align: center;">시나리오</th>
+                <th>평균 대기일<br><span style="font-weight: 500; color: var(--text-3); font-size: 11px;">(귀사 캘린더 기준)</span></th>
+                <th>M+4 대비</th>
+                <th>당사 평가</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="label">현행 (M+4)</td>
+                <td style="color: var(--text-2);">약 20일</td>
+                <td style="color: var(--text-2);">기준</td>
+                <td style="color: var(--text-2);">-</td>
+              </tr>
+              <tr style="background: #ECFDF5;">
+                <td class="label" style="background: #D1FAE5;">W+10</td>
+                <td>약 19일</td>
+                <td style="color: var(--green); font-weight: 700;">−1일 (개선)</td>
+                <td style="color: var(--green); font-weight: 700;">★ 이상적</td>
+              </tr>
+              <tr style="background: #ECFDF5;">
+                <td class="label" style="background: #D1FAE5;">W+13</td>
+                <td>약 22일</td>
+                <td style="color: var(--green); font-weight: 700;">+3일</td>
+                <td style="color: var(--green); font-weight: 700;">본전선 (기 제시)</td>
+              </tr>
+              <tr style="background: #FFFBEB;">
+                <td class="label" style="background: #FEF3C7;">W+15</td>
+                <td>약 27일</td>
+                <td style="color: var(--amber); font-weight: 700;">+7일</td>
+                <td style="color: var(--amber); font-weight: 700;">수용 가능 한계</td>
+              </tr>
+              <tr style="background: #FEF2F2;">
+                <td class="label" style="background: #FEE2E2;">W+17</td>
+                <td>약 29일</td>
+                <td style="color: var(--red); font-weight: 700;">+9일</td>
+                <td style="color: var(--red); font-weight: 700;">재검토 필요</td>
+              </tr>
+              <tr style="background: #FEF2F2;">
+                <td class="label" style="background: #FEE2E2;">W+20 (귀사 제안)</td>
+                <td>약 34일</td>
+                <td style="color: var(--red); font-weight: 700;">+15일</td>
+                <td style="color: var(--red); font-weight: 700;">수용 불가</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ask-box">
+          <div class="ask-label">Revised Ask — 조정 가능 범위</div>
+          <div class="ask-title">
+            1순위 <span class="hl">W+13</span> · 수용 가능 한계 <span style="color: var(--amber);">W+15</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-2); line-height: 1.7; margin: 0 0 10px 0;">
+            <strong style="color: var(--text);">W+10</strong>이 당사 이상 수준이며, <strong style="color: var(--text);">W+13</strong>은 앞선 회신에서 제시드린 현금흐름 본전선입니다.
+            귀사 내부 정책상 13까지의 단축이 어려우신 경우, <strong style="color: var(--text);">W+15</strong> 수준까지는 수용 가능함을 공유드립니다.
+            단 이 경우 당사 Float 부담이 증가하는 만큼, 연 GMV 증가분에 연동한 수수료율 추가 조정 등 보완 조건을 함께 논의드리고 싶습니다.
+          </p>
+          <p style="font-size: 13.5px; color: var(--text); line-height: 1.7; margin: 12px 0 0 0; padding: 12px 16px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+            <strong style="color: var(--brand);">주 1회 정산 구조는 전 시나리오에서 동일하게 유지됩니다.</strong> 빈도와 지연은 분리 조정 가능한 파라미터이므로, 귀사 내부에서 유연한 검토가 가능하실 것으로 판단됩니다.
+          </p>
+        </div>
+      </section>
+
+      <!-- 결론 -->
+      <section class="section">
+        <p style="font-size: 14px; line-height: 1.75; color: var(--text-2); margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+          보내주신 캘린더 및 상세 설명에 감사드립니다. 빈도와 지연은 독립적으로 조정 가능한 파라미터이며, 당사에서 수용 가능한 범위(W+10 ~ W+15)를 투명하게 공유드리오니 귀사 내부 검토 후 합리적 접점을 제안 주시면 감사하겠습니다. 회신 부탁드립니다.
+        </p>
+        <div style="text-align: right; margin-top: 32px;">
+          <div style="font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px;">감사합니다.</div>
+          <div style="font-size: 13px; color: var(--text-2);">주식회사 어바웃피싱 드림</div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="doc-footer">
+      <span>주식회사 어바웃피싱 · 정산 주기 추가 검토 회신</span>
+      <span>2026.04.21</span>
+    </footer>
+  </article>
+</div>
+</body>
+</html>
