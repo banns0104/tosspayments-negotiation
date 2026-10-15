@@ -62,6 +62,9 @@ tr.hl td .bar{background:var(--violet)}
 .fig strong{font-size:21px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .fig em{font-style:normal;font-size:12px;color:var(--ink-2)}
 .fig.up strong{color:var(--red)}
+.fig.key{background:var(--violet-soft)}
+.fig.key strong{color:var(--cta);font-size:26px}
+.callout{border-left:3px solid var(--cta);padding:12px 16px;background:var(--soft);border-radius:0 10px 10px 0;font-size:15px;font-weight:600;color:var(--ink-title)}
 .quote{border-left:3px solid var(--violet);padding:12px 16px;background:var(--soft);border-radius:0 10px 10px 0;font-size:14px;color:var(--ink-title)}
 .quote .src{display:block;font-size:12px;color:var(--ink-2);margin-top:4px}
 ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:68ch}
@@ -91,14 +94,12 @@ a:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 .flow div.key{background:var(--violet-soft)}
 @media (max-width:640px){.flow{grid-template-columns:1fr 1fr}}
 </style>
-</head>
-<body>
 
 <div class="wrap"><article class="doc">
 <header class="cover">
   <p class="kicker">토스페이먼츠 · 가맹점 정산 주기 검토 자료</p>
   <h1>주 단위 정산 검토 요청과 판단 자료</h1>
-  <p class="lead">어바웃피싱은 결제 대비 취소 금액 비율이 높은 가맹점입니다. 이 비율을 먼저 그대로 드립니다. 이어서 결제 대금이 선주에게 언제 지급되는지, 월정산에서 선주 대금을 얼마나 먼저 내주고 있는지, 취소가 언제 일어나는지, 정산 뒤 환불이 얼마나 되는지를 귀사 정산 자료와 어바웃피싱 예약 원장으로 정리했습니다. 정산 주기와 보완 조건은 귀사 심사 기준과 절차에 따르겠습니다.</p>
+  <p class="lead">어바웃피싱은 결제 대비 취소 금액 비율이 높은 가맹점입니다. 다만 취소의 대부분은 결제 직후에 일어납니다. 취소가 언제 일어나는지, 전체 취소 비율, 결제 대금이 선주에게 언제 지급되는지, 월정산에서 선주 대금을 얼마나 먼저 내주고 있는지를 귀사 결제내역과 어바웃피싱 예약 원장으로 정리했습니다. 정산 주기와 조건은 귀사 심사 기준과 절차에 따르겠습니다.</p>
   <div class="meta">
     <div><span>발신</span>주식회사 어바웃피싱 서현일 이사(CPO)</div>
     <div><span>수신</span>토스페이먼츠 Revenue Growth Team 이승주 Partner</div>
@@ -118,7 +119,57 @@ a:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 </section>
 
 <section>
-  <h2><span class="n">01</span>결제 대금의 흐름</h2>
+  <h2><span class="n">01</span>취소가 일어나는 시점</h2>
+  <p class="callout">취소 금액의 45.5%는 결제 당일에, 76.4%는 결제 후 7일 안에 일어났습니다.</p>
+  <div class="pair">
+    <div class="fig key"><span>결제 당일 취소</span><strong>45.5%</strong><em>그중 1시간 안 28.5%</em></div>
+    <div class="fig key"><span>결제 후 7일 안 취소</span><strong>76.4%</strong><em>취소 금액 기준 누적</em></div>
+    <div class="fig key"><span>출조일 이후 취소</span><strong>1.6%</strong><em>예약 원장 기준(3~8월 결제)</em></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>결제 후 취소까지</th><th>취소 금액(원)</th><th>비중</th><th>누적</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>1시간 안</td><td>219,206,225</td><td>28.5%<span class="bar" style="width:68px"></span></td><td>28.5%</td></tr>
+      <tr class="hl"><td>결제 당일(1시간 이후)</td><td>130,091,780</td><td>16.9%<span class="bar" style="width:41px"></span></td><td>45.5%</td></tr>
+      <tr><td>1~3일</td><td>177,796,719</td><td>23.1%<span class="bar" style="width:55px"></span></td><td>68.6%</td></tr>
+      <tr><td>4~7일</td><td>59,765,560</td><td>7.8%<span class="bar" style="width:19px"></span></td><td>76.4%</td></tr>
+      <tr><td>8~14일</td><td>57,971,300</td><td>7.5%<span class="bar" style="width:18px"></span></td><td>83.9%</td></tr>
+      <tr><td>15~30일</td><td>67,304,120</td><td>8.8%<span class="bar" style="width:21px"></span></td><td>92.7%</td></tr>
+      <tr><td>31일 이후</td><td>56,271,000</td><td>7.3%<span class="bar" style="width:18px"></span></td><td>100.0%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">귀사 결제내역의 결제일시와 취소완료일시 기준(3~9월 결제, 취소 4,875건).</p>
+  <p>결제 당일 취소는 정산 주기와 관계없이 정산 전에 결제에서 빠집니다. 결제 직후 취소가 많은 이유는 아래와 같습니다.</p>
+  <ul>
+    <li>취소 금액의 45.8%는 같은 회원이 취소 전후 24시간 안에 다시 결제한 건입니다. 인원이나 날짜를 바꿀 때 일부만 취소하는 기능이 없어 전체를 취소하고 다시 결제합니다. 일부 취소 기능은 도입을 준비하고 있으며, 도입 후 변화는 자료로 드리겠습니다.</li>
+    <li>취소 사유 중 기상 악화·출항 취소·최소인원 미달이 19.1%, 일정 변경이 25.3%입니다(사유는 예약 시스템 입력값 기준이며, 재결제 건과 겹칠 수 있습니다).</li>
+    <li>취소를 처리한 주체는 회원 48.6%, 운영자 31.9%, 선주 19.5%입니다.</li>
+  </ul>
+  <p class="note">위 세 항목은 예약 원장 기준(3~8월 결제 7,090건)입니다.</p>
+</section>
+
+<section>
+  <h2><span class="n">02</span>귀사 결제내역 기준 전체 결제·취소</h2>
+  <p>앞의 취소 금액까지 모두 포함한 결제월별 취소 비율입니다. 3~9월 합계 42.4%이며, 이 중 76.4%는 결제 후 7일 안에 취소된 금액입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>결제월</th><th>결제(원)</th><th>그중 취소(원)</th><th>취소 비율</th></tr></thead>
+    <tbody>
+      <tr><td>3월</td><td>175,039,310</td><td>60,791,710</td><td>34.7%</td></tr>
+      <tr><td>4월</td><td>241,399,440</td><td>88,935,440</td><td>36.8%</td></tr>
+      <tr><td>5월</td><td>142,782,850</td><td>56,576,750</td><td>39.6%</td></tr>
+      <tr><td>6월</td><td>212,301,394</td><td>82,995,694</td><td>39.1%</td></tr>
+      <tr><td>7월</td><td>147,479,290</td><td>68,017,090</td><td>46.1%</td></tr>
+      <tr><td>8월</td><td>271,469,170</td><td>130,306,120</td><td>48.0%</td></tr>
+      <tr><td>9월</td><td>621,798,600</td><td>280,783,900</td><td>45.2%</td></tr>
+      <tr class="hl"><td>합계</td><td>1,812,270,054</td><td>768,406,704</td><td>42.4%</td></tr>
+    </tbody>
+  </table></div>
+  <p>9월 결제가 늘어난 것은 9월 9일 통합 앱 출시와 가을 출조 성수기가 겹친 영향입니다. 9월 결제분은 출조일이 남은 예약이 있어 취소 금액이 더 늘 수 있습니다.</p>
+  <p class="note">귀사 결제내역 2종(카드·간편결제 9,900건, 퀵계좌이체 973건, 결제일 2026-03-01 ~ 09-30)으로 계산했습니다. 월별 결제 금액은 귀사 월별 요약표와 원 단위까지 같고, 4~9월 취소 금액도 취소된 달 기준으로 같습니다. 결제수단별 순결제 비중: 카드 44.2%, 네이버페이 29.7%, 카카오페이 11.6%, 퀵계좌이체 9.7%, 토스페이 4.8%.</p>
+</section>
+
+<section>
+  <h2><span class="n">03</span>결제 대금의 흐름</h2>
   <p>어바웃피싱은 선상낚시 예약을 받는 플랫폼입니다. 고객이 결제한 대금은 어바웃피싱이 정산받아 보관하고, 선주에게는 고객 이용이 끝난 뒤 매주 화요일과 목요일 두 번 정산합니다.</p>
   <div class="flow">
     <div><span>1. 결제</span><b>고객 결제</b><em>출조일보다 앞서 결제합니다. 결제부터 출조일까지 결제액 기준 중앙값 20일</em></div>
@@ -131,8 +182,8 @@ a:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 </section>
 
 <section>
-  <h2><span class="n">02</span>월정산에서 생기는 선주 대금 선지급</h2>
-  <p>출조가 결제 직후에 잡힌 예약은 선주 정산일(이용 완료 뒤 돌아오는 화·목요일)이 귀사 정산 입금일(다음 달 4영업일)보다 먼저 옵니다. 이 경우 어바웃피싱이 회사 자금으로 선주 대금을 먼저 지급하고, 귀사 정산을 받은 뒤 메웁니다. 결제가 많은 달일수록 이 금액이 커집니다.</p>
+  <h2><span class="n">04</span>월정산에서 생기는 선주 대금 선지급</h2>
+  <p>출조가 결제 직후에 잡힌 예약은 선주 정산일(이용 완료 뒤 돌아오는 화·목요일)이 귀사 정산 입금일(다음 달 4영업일)보다 먼저 옵니다. 이 경우 어바웃피싱이 회사 자금으로 선주 대금을 먼저 지급하고, 귀사 정산을 받은 뒤 메웁니다. 결제가 많고 출조일이 가까운 예약이 많은 달일수록 이 금액이 커집니다.</p>
   <div class="tw"><table>
     <thead><tr><th>결제월</th><th>순결제(원)</th><th>선주 대금 중 먼저 지급한 금액(원)</th><th>순결제 대비</th></tr></thead>
     <tbody>
@@ -154,99 +205,25 @@ a:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 </section>
 
 <section>
-  <h2><span class="n">03</span>핵심 지표</h2>
+  <h2><span class="n">05</span>요약 지표</h2>
   <div class="tw"><table>
     <thead><tr><th>지표</th><th>값</th><th>기준</th><th>기간</th></tr></thead>
     <tbody>
-      <tr><td>결제 대비 취소 금액 비율</td><td>42.4%</td><td>귀사 결제내역(결제월 기준)</td><td>3~9월 결제</td></tr>
-      <tr><td>결제 후 7일 안에 일어난 취소</td><td>취소 금액의 76.4%</td><td>귀사 결제내역</td><td>3~9월 결제</td></tr>
+      <tr class="hl"><td>결제 당일 취소</td><td>취소 금액의 45.5%</td><td>귀사 결제내역</td><td>3~9월 결제</td></tr>
+      <tr class="hl"><td>결제 후 7일 안에 일어난 취소</td><td>취소 금액의 76.4%</td><td>귀사 결제내역</td><td>3~9월 결제</td></tr>
       <tr><td>출조일 이후 취소</td><td>취소 금액의 1.6%</td><td>예약 원장</td><td>3~8월 결제</td></tr>
-      <tr><td>정산 뒤 환불(현행 월정산)</td><td>결제액의 6.5%</td><td>귀사 결제내역, 어바웃피싱 계산</td><td>3~9월 결제</td></tr>
-      <tr class="hl"><td>정산 뒤 환불(주정산 가정)</td><td>결제액의 9.5% (+2.9%p)</td><td>귀사 결제내역, 어바웃피싱 계산</td><td>3~9월 결제</td></tr>
+      <tr><td>결제 대비 취소 금액 비율</td><td>42.4%</td><td>귀사 결제내역(결제월 기준)</td><td>3~9월 결제</td></tr>
+      <tr><td>3~8월 월정산으로 먼저 지급한 선주 대금</td><td>2억 7,765만원</td><td>예약 원장</td><td>3~8월 결제</td></tr>
       <tr><td>주별 순결제가 마이너스인 주</td><td>0주 / 29주</td><td>귀사 결제내역</td><td>3/9~9/27</td></tr>
     </tbody>
   </table></div>
   <div class="tw"><table>
-    <thead><tr><th>용어</th><th>뜻</th><th>혼동하지 않을 것</th></tr></thead>
+    <thead><tr><th>용어</th><th style="text-align:left">뜻</th><th style="text-align:left">혼동하지 않을 것</th></tr></thead>
     <tbody>
       <tr><td>취소 금액 비율</td><td style="text-align:left;white-space:normal">그 달 결제 중 나중에라도 취소된 금액의 비율(결제월 기준)</td><td style="text-align:left;white-space:normal">정산 전에 빠진 취소도 포함합니다. 미회수 금액과 같지 않습니다. 귀사 월별 요약표의 취소 금액은 취소된 달 기준이라 비율이 39.9%로 나옵니다.</td></tr>
-      <tr><td>정산 뒤 환불</td><td style="text-align:left;white-space:normal">정산일이 지난 뒤 취소된 금액</td><td style="text-align:left;white-space:normal">다음 회차 정산에서 차감되는 금액이며, 그 자체로 손실은 아닙니다.</td></tr>
-      <tr><td>순결제</td><td style="text-align:left;white-space:normal">그 주 결제에서 그 주에 완료된 취소를 뺀 금액</td><td style="text-align:left;white-space:normal">귀사 결제내역의 결제일시·취소완료일시로 계산했습니다.</td></tr>
+      <tr><td>순결제</td><td style="text-align:left;white-space:normal">결제에서 취소된 금액을 뺀 금액</td><td style="text-align:left;white-space:normal">04의 월별 순결제는 예약 원장에서 취소되지 않은 건의 합계입니다. 주별 순결제는 귀사 결제내역에서 그 주 결제에서 그 주에 완료된 취소를 뺀 금액입니다.</td></tr>
     </tbody>
   </table></div>
-</section>
-
-<section>
-  <h2><span class="n">04</span>귀사 결제내역 기준 결제·취소</h2>
-  <div class="tw"><table>
-    <thead><tr><th>결제월</th><th>결제(원)</th><th>그중 취소(원)</th><th>취소 비율</th></tr></thead>
-    <tbody>
-      <tr><td>3월</td><td>175,039,310</td><td>60,791,710</td><td>34.7%</td></tr>
-      <tr><td>4월</td><td>241,399,440</td><td>88,935,440</td><td>36.8%</td></tr>
-      <tr><td>5월</td><td>142,782,850</td><td>56,576,750</td><td>39.6%</td></tr>
-      <tr><td>6월</td><td>212,301,394</td><td>82,995,694</td><td>39.1%</td></tr>
-      <tr><td>7월</td><td>147,479,290</td><td>68,017,090</td><td>46.1%</td></tr>
-      <tr><td>8월</td><td>271,469,170</td><td>130,306,120</td><td>48.0%</td></tr>
-      <tr><td>9월</td><td>621,798,600</td><td>280,783,900</td><td>45.2%</td></tr>
-      <tr class="hl"><td>합계</td><td>1,812,270,054</td><td>768,406,704</td><td>42.4%</td></tr>
-    </tbody>
-  </table></div>
-  <p>9월 결제가 늘어난 것은 9월 9일 통합 앱 출시와 가을 출조 성수기가 겹친 영향입니다. 9월 결제분은 출조일이 남은 예약이 있어 취소 금액이 더 늘 수 있습니다.</p>
-  <p class="note">귀사 결제내역 2종(카드·간편결제 9,900건, 퀵계좌이체 973건, 결제일 2026-03-01 ~ 09-30)으로 계산했습니다. 월별 결제 금액은 귀사 월별 요약표와 원 단위까지 같고, 4~9월 취소 금액도 취소된 달 기준으로 같습니다. 결제수단별 순결제 비중: 카드 44.2%, 네이버페이 29.7%, 카카오페이 11.6%, 퀵계좌이체 9.7%, 토스페이 4.8%.</p>
-</section>
-
-<section>
-  <h2><span class="n">05</span>취소가 일어나는 시점과 이유</h2>
-  <div class="tw"><table>
-    <thead><tr><th>결제 후 취소까지</th><th>취소 금액(원)</th><th>비중</th><th>누적</th></tr></thead>
-    <tbody>
-      <tr><td>1시간 안</td><td>219,206,225</td><td>28.5%</td><td>28.5%</td></tr>
-      <tr><td>결제 당일(1시간 이후)</td><td>130,091,780</td><td>16.9%</td><td>45.5%</td></tr>
-      <tr><td>1~3일</td><td>177,796,719</td><td>23.1%</td><td>68.6%</td></tr>
-      <tr class="hl"><td>4~7일</td><td>59,765,560</td><td>7.8%</td><td>76.4%</td></tr>
-      <tr><td>8~14일</td><td>57,971,300</td><td>7.5%</td><td>83.9%</td></tr>
-      <tr><td>15~30일</td><td>67,304,120</td><td>8.8%</td><td>92.7%</td></tr>
-      <tr><td>31일 이후</td><td>56,271,000</td><td>7.3%</td><td>100.0%</td></tr>
-    </tbody>
-  </table></div>
-  <p class="note">귀사 결제내역의 결제일시와 취소완료일시 기준(3~9월 결제, 취소 4,875건).</p>
-  <ul>
-    <li>취소 금액의 45.8%는 같은 회원이 취소 전후 24시간 안에 다시 결제한 건입니다. 인원이나 날짜를 바꿀 때 일부만 취소하는 기능이 없어 전체를 취소하고 다시 결제합니다. 일부 취소 기능은 도입을 준비하고 있으며, 도입 후 변화는 자료로 드리겠습니다.</li>
-    <li>취소 사유 중 기상 악화·출항 취소·최소인원 미달이 19.1%, 일정 변경이 25.3%입니다(사유는 예약 시스템 입력값 기준이며, 재결제 건과 겹칠 수 있습니다).</li>
-    <li>취소를 처리한 주체는 회원 48.6%, 운영자 31.9%, 선주 19.5%입니다.</li>
-  </ul>
-  <p class="note">위 세 항목은 예약 원장 기준(3~8월 결제 7,090건)입니다.</p>
-</section>
-
-<section>
-  <h2><span class="n">06</span>정산 뒤 환불 규모</h2>
-  <p>3~9월 결제에 주 1회 정산을 적용했을 때 정산이 끝난 뒤 취소되는 금액을 귀사 결제내역으로 계산했습니다. 정산일은 어바웃피싱이 임의로 「거래주 금요일 + 5영업일」로 가정했으며, 귀사 산식으로 다시 계산하면 값이 달라질 수 있습니다.</p>
-  <div class="tw"><table>
-    <thead><tr><th>구분</th><th>정산 뒤 환불(원)</th><th>결제액 대비</th></tr></thead>
-    <tbody>
-      <tr><td>현행 월 1회 정산</td><td>118,084,920</td><td>6.5%</td></tr>
-      <tr><td>주 1회 정산(가정)</td><td>171,535,570</td><td>9.5%</td></tr>
-      <tr class="hl"><td>늘어나는 금액(7개월)</td><td>53,450,650</td><td>+2.9%p</td></tr>
-    </tbody>
-  </table></div>
-  <div class="pair">
-    <div class="fig"><span>주별 정산 뒤 환불 / 같은 주 순결제</span><strong>평균 12%</strong><em>3/9 ~ 9/27, 29주</em></div>
-    <div class="fig"><span>환불 금액이 가장 컸던 주</span><strong>1,007만원</strong><em>9/7 주. 같은 주 순결제 8,730만원</em></div>
-    <div class="fig"><span>비율이 가장 높았던 주</span><strong>88%</strong><em>5/11 주: 순결제 665만원, 환불 583만원</em></div>
-  </div>
-  <div class="chart"><svg viewBox="0 0 680 236" role="img" aria-label="주별 순결제와 정산 뒤 환불 금액"><line x1="46" x2="674" y1="210.0" y2="210.0" stroke="#E7E7E7" stroke-width="1"/><text x="40" y="214.0" text-anchor="end" font-size="10" fill="#767676">0백만</text><line x1="46" x2="674" y1="143.3" y2="143.3" stroke="#E7E7E7" stroke-width="1"/><text x="40" y="147.3" text-anchor="end" font-size="10" fill="#767676">30백만</text><line x1="46" x2="674" y1="76.7" y2="76.7" stroke="#E7E7E7" stroke-width="1"/><text x="40" y="80.7" text-anchor="end" font-size="10" fill="#767676">60백만</text><line x1="46" x2="674" y1="10.0" y2="10.0" stroke="#E7E7E7" stroke-width="1"/><text x="40" y="14.0" text-anchor="end" font-size="10" fill="#767676">90백만</text><rect x="46.0" y="176.8" width="18" height="33.2" rx="2" fill="#D9CEF8"><title>2026-03-09 주 순결제 14,958,800원</title></rect><rect x="46.0" y="209.4" width="18" height="1.0" rx="1" fill="#EE0005"><title>2026-03-09 주 정산 뒤 환불 280,000원</title></rect><text x="55.0" y="226" text-anchor="middle" font-size="10" fill="#767676">3/9</text><rect x="67.5" y="153.2" width="18" height="56.8" rx="2" fill="#D9CEF8"><title>2026-03-16 주 순결제 25,552,800원</title></rect><rect x="67.5" y="209.5" width="18" height="1.0" rx="1" fill="#EE0005"><title>2026-03-16 주 정산 뒤 환불 240,000원</title></rect><rect x="89.0" y="82.5" width="18" height="127.5" rx="2" fill="#D9CEF8"><title>2026-03-23 주 순결제 57,360,200원</title></rect><rect x="89.0" y="208.0" width="18" height="2.0" rx="1" fill="#EE0005"><title>2026-03-23 주 정산 뒤 환불 907,200원</title></rect><rect x="110.5" y="106.6" width="18" height="103.4" rx="2" fill="#D9CEF8"><title>2026-03-30 주 순결제 46,547,800원</title></rect><rect x="110.5" y="207.4" width="18" height="2.6" rx="1" fill="#EE0005"><title>2026-03-30 주 정산 뒤 환불 1,160,000원</title></rect><rect x="132.0" y="156.9" width="18" height="53.1" rx="2" fill="#D9CEF8"><title>2026-04-06 주 순결제 23,892,360원</title></rect><rect x="132.0" y="202.1" width="18" height="7.9" rx="1" fill="#EE0005"><title>2026-04-06 주 정산 뒤 환불 3,552,000원</title></rect><text x="141.0" y="226" text-anchor="middle" font-size="10" fill="#767676">4/6</text><rect x="153.5" y="162.0" width="18" height="48.0" rx="2" fill="#D9CEF8"><title>2026-04-13 주 순결제 21,607,240원</title></rect><rect x="153.5" y="198.6" width="18" height="11.4" rx="1" fill="#EE0005"><title>2026-04-13 주 정산 뒤 환불 5,148,000원</title></rect><rect x="175.0" y="137.3" width="18" height="72.7" rx="2" fill="#D9CEF8"><title>2026-04-20 주 순결제 32,729,800원</title></rect><rect x="175.0" y="205.2" width="18" height="4.8" rx="1" fill="#EE0005"><title>2026-04-20 주 정산 뒤 환불 2,152,000원</title></rect><rect x="196.5" y="35.4" width="18" height="174.6" rx="2" fill="#D9CEF8"><title>2026-04-27 주 순결제 78,550,600원</title></rect><rect x="196.5" y="199.6" width="18" height="10.4" rx="1" fill="#EE0005"><title>2026-04-27 주 정산 뒤 환불 4,662,000원</title></rect><rect x="218.0" y="188.1" width="18" height="21.9" rx="2" fill="#D9CEF8"><title>2026-05-04 주 순결제 9,845,000원</title></rect><rect x="218.0" y="204.9" width="18" height="5.1" rx="1" fill="#EE0005"><title>2026-05-04 주 정산 뒤 환불 2,288,000원</title></rect><text x="227.0" y="226" text-anchor="middle" font-size="10" fill="#767676">5/4</text><rect x="239.5" y="195.2" width="18" height="14.8" rx="2" fill="#D9CEF8"><title>2026-05-11 주 순결제 6,646,000원</title></rect><rect x="239.5" y="197.1" width="18" height="12.9" rx="1" fill="#EE0005"><title>2026-05-11 주 정산 뒤 환불 5,826,000원</title></rect><rect x="261.0" y="150.6" width="18" height="59.4" rx="2" fill="#D9CEF8"><title>2026-05-18 주 순결제 26,710,500원</title></rect><rect x="261.0" y="197.0" width="18" height="13.0" rx="1" fill="#EE0005"><title>2026-05-18 주 정산 뒤 환불 5,868,000원</title></rect><rect x="282.5" y="137.7" width="18" height="72.3" rx="2" fill="#D9CEF8"><title>2026-05-25 주 순결제 32,522,500원</title></rect><rect x="282.5" y="199.6" width="18" height="10.4" rx="1" fill="#EE0005"><title>2026-05-25 주 정산 뒤 환불 4,666,000원</title></rect><rect x="304.0" y="141.1" width="18" height="68.9" rx="2" fill="#D9CEF8"><title>2026-06-01 주 순결제 31,004,000원</title></rect><rect x="304.0" y="197.3" width="18" height="12.7" rx="1" fill="#EE0005"><title>2026-06-01 주 정산 뒤 환불 5,705,000원</title></rect><text x="313.0" y="226" text-anchor="middle" font-size="10" fill="#767676">6/1</text><rect x="325.5" y="140.5" width="18" height="69.5" rx="2" fill="#D9CEF8"><title>2026-06-08 주 순결제 31,291,900원</title></rect><rect x="325.5" y="198.9" width="18" height="11.1" rx="1" fill="#EE0005"><title>2026-06-08 주 정산 뒤 환불 5,016,000원</title></rect><rect x="347.0" y="164.7" width="18" height="45.3" rx="2" fill="#D9CEF8"><title>2026-06-15 주 순결제 20,365,000원</title></rect><rect x="347.0" y="189.6" width="18" height="20.4" rx="1" fill="#EE0005"><title>2026-06-15 주 정산 뒤 환불 9,172,000원</title></rect><rect x="368.5" y="159.2" width="18" height="50.8" rx="2" fill="#D9CEF8"><title>2026-06-22 주 순결제 22,875,400원</title></rect><rect x="368.5" y="203.8" width="18" height="6.2" rx="1" fill="#EE0005"><title>2026-06-22 주 정산 뒤 환불 2,807,500원</title></rect><rect x="390.0" y="106.0" width="18" height="104.0" rx="2" fill="#D9CEF8"><title>2026-06-29 주 순결제 46,815,500원</title></rect><rect x="390.0" y="204.0" width="18" height="6.0" rx="1" fill="#EE0005"><title>2026-06-29 주 정산 뒤 환불 2,717,600원</title></rect><text x="399.0" y="226" text-anchor="middle" font-size="10" fill="#767676">6/29</text><rect x="411.5" y="174.0" width="18" height="36.0" rx="2" fill="#D9CEF8"><title>2026-07-06 주 순결제 16,178,300원</title></rect><rect x="411.5" y="200.6" width="18" height="9.4" rx="1" fill="#EE0005"><title>2026-07-06 주 정산 뒤 환불 4,222,400원</title></rect><rect x="433.0" y="180.9" width="18" height="29.1" rx="2" fill="#D9CEF8"><title>2026-07-13 주 순결제 13,084,700원</title></rect><rect x="433.0" y="203.2" width="18" height="6.8" rx="1" fill="#EE0005"><title>2026-07-13 주 정산 뒤 환불 3,059,000원</title></rect><rect x="454.5" y="171.8" width="18" height="38.2" rx="2" fill="#D9CEF8"><title>2026-07-20 주 순결제 17,184,200원</title></rect><rect x="454.5" y="204.2" width="18" height="5.8" rx="1" fill="#EE0005"><title>2026-07-20 주 정산 뒤 환불 2,588,400원</title></rect><rect x="476.0" y="177.4" width="18" height="32.6" rx="2" fill="#D9CEF8"><title>2026-07-27 주 순결제 14,686,100원</title></rect><rect x="476.0" y="196.7" width="18" height="13.3" rx="1" fill="#EE0005"><title>2026-07-27 주 정산 뒤 환불 5,965,000원</title></rect><text x="485.0" y="226" text-anchor="middle" font-size="10" fill="#767676">7/27</text><rect x="497.5" y="184.2" width="18" height="25.8" rx="2" fill="#D9CEF8"><title>2026-08-03 주 순결제 11,624,900원</title></rect><rect x="497.5" y="202.2" width="18" height="7.8" rx="1" fill="#EE0005"><title>2026-08-03 주 정산 뒤 환불 3,496,100원</title></rect><rect x="519.0" y="146.2" width="18" height="63.8" rx="2" fill="#D9CEF8"><title>2026-08-10 주 순결제 28,730,600원</title></rect><rect x="519.0" y="203.3" width="18" height="6.7" rx="1" fill="#EE0005"><title>2026-08-10 주 정산 뒤 환불 3,036,000원</title></rect><rect x="540.5" y="150.0" width="18" height="60.0" rx="2" fill="#D9CEF8"><title>2026-08-17 주 순결제 27,010,370원</title></rect><rect x="540.5" y="203.0" width="18" height="7.0" rx="1" fill="#EE0005"><title>2026-08-17 주 정산 뒤 환불 3,149,000원</title></rect><rect x="562.0" y="44.7" width="18" height="165.3" rx="2" fill="#D9CEF8"><title>2026-08-24 주 순결제 74,378,950원</title></rect><rect x="562.0" y="196.6" width="18" height="13.4" rx="1" fill="#EE0005"><title>2026-08-24 주 정산 뒤 환불 6,034,400원</title></rect><text x="571.0" y="226" text-anchor="middle" font-size="10" fill="#767676">8/24</text><rect x="583.5" y="58.6" width="18" height="151.4" rx="2" fill="#D9CEF8"><title>2026-08-31 주 순결제 68,131,000원</title></rect><rect x="583.5" y="194.9" width="18" height="15.1" rx="1" fill="#EE0005"><title>2026-08-31 주 정산 뒤 환불 6,785,750원</title></rect><rect x="605.0" y="16.0" width="18" height="194.0" rx="2" fill="#D9CEF8"><title>2026-09-07 주 순결제 87,300,930원</title></rect><rect x="605.0" y="187.6" width="18" height="22.4" rx="1" fill="#EE0005"><title>2026-09-07 주 정산 뒤 환불 10,068,420원</title></rect><rect x="626.5" y="25.7" width="18" height="184.3" rx="2" fill="#D9CEF8"><title>2026-09-14 주 순결제 82,912,750원</title></rect><rect x="626.5" y="191.8" width="18" height="18.2" rx="1" fill="#EE0005"><title>2026-09-14 주 정산 뒤 환불 8,202,350원</title></rect><rect x="648.0" y="36.6" width="18" height="173.4" rx="2" fill="#D9CEF8"><title>2026-09-21 주 순결제 78,018,200원</title></rect><rect x="648.0" y="192.0" width="18" height="18.0" rx="1" fill="#EE0005"><title>2026-09-21 주 정산 뒤 환불 8,117,450원</title></rect><text x="657.0" y="226" text-anchor="middle" font-size="10" fill="#767676">9/21</text></svg>
-    <div class="legend"><span><i style="background:#D9CEF8"></i>주별 순결제</span><span><i style="background:#EE0005"></i>주 1회 정산 가정 시 정산 뒤 환불</span></div>
-  </div>
-  <p class="note">주 = 월요일~일요일. 두 값 모두 귀사 결제내역으로 계산했습니다. 정산 뒤 환불은 결제 건마다 가정 정산일 이후에 취소된 금액을 취소일이 속한 주에 더했습니다. 결제내역이 9월 30일 결제분까지라 9/28 이후 주는 표에서 뺐습니다.</p>
-</section>
-
-<section>
-  <h2><span class="n">07</span>어바웃피싱이 따를 수 있는 조건</h2>
-  <div class="guard">
-    <div><b>귀사가 정하는 보완 조건</b><p>지급보류, 보증보험, 정산 뒤 환불의 상계, 지급 이월 등 귀사 기준에 따른 조건을 따르겠습니다.</p></div>
-    <div><b>자료 제출</b><p>월별 결제·취소·선주 지급 현황과 예약 원장·귀사 데이터의 대사표를 귀사가 원하는 형식과 주기로 제출하겠습니다.</p></div>
-    <div><b>취소 감소 개선</b><p>일부 취소 기능 도입 등 취소를 줄이는 개선을 진행하고, 결과를 자료로 공유하겠습니다.</p></div>
-  </div>
   <button type="button" class="dl" id="pdfBtn" style="border:0;cursor:pointer;font-family:inherit">PDF로 내려받기</button>
 </section>
 
